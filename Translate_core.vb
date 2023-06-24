@@ -5,11 +5,11 @@ Imports System.Xml
 Imports Google.Cloud.Translation.V2
 
 
-
 Public Class Translate_form
 
 
     Const GoogleCloudApiKey = "AIzaSyA_lbC-g1PfLkg6nskzmd0tJ0NagGhQ-D0"
+
 
     Dim str_arr(,) As String
     Dim translated() As String
@@ -78,18 +78,6 @@ Public Class Translate_form
 
     End Sub
 
-    Private Sub Translate_testing()
-
-        Dim translateClient As TranslationClient
-        Dim response As TranslationResult
-
-
-        translateClient = TranslationClient.CreateFromApiKey(GoogleCloudApiKey)
-        response = translateClient.TranslateText(TextBox1.Text, LanguageCodes.Ukrainian)
-        Label1.Text = response.TranslatedText
-
-    End Sub
-
 
     'переклад з використанням google
     Private Sub trans_table()
@@ -106,7 +94,9 @@ Public Class Translate_form
 
         For i = 0 To str_arr.GetLength(1) - 1
 
+            Label2.Text = CStr((i + 1) & " / " & str_arr.GetLength(1))
 
+            ProgressBar1.Value = Math.Round(100 * (i + 1) / str_arr.GetLength(1))
             'розбивання строки по символай переносу рядка
             Dim splitedrow() As String
 
@@ -116,6 +106,8 @@ Public Class Translate_form
             'переклад окремих частин, розбитого рядка
             For s = 0 To splitedrow.Length - 1
 
+
+
                 response = translateClient.TranslateHtml(splitedrow(s), LanguageCodes.Ukrainian)
 
                 'збирання перекладеного рядка та додавання переносів
@@ -124,6 +116,8 @@ Public Class Translate_form
                 Else
                     temp_row = temp_row + response.TranslatedText
                 End If
+
+                Application.DoEvents()
 
             Next
 
@@ -139,7 +133,7 @@ Public Class Translate_form
 
         Next
 
-        MessageBox.Show("Done")
+        ' MessageBox.Show("Done")
 
 
     End Sub
@@ -211,8 +205,7 @@ Public Class Translate_form
     'запуск на виконня парсингу xml файлу
     Private Sub Start_Click(sender As Object, e As EventArgs) Handles Start.Click
 
-        DataGridView1.ColumnCount = 1
-        DataGridView1.RowCount = 1
+        DataGridView1.Rows.Clear()
 
         OpenFileDialog1.InitialDirectory = Directory.GetCurrentDirectory()
 
@@ -226,14 +219,6 @@ Public Class Translate_form
         generate_table()
 
     End Sub
-
-    'тестове бознащо 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-
-        Translate_testing()
-
-    End Sub
-
 
     'виклик функції перекладу
     Private Sub Translate_start_Click(sender As Object, e As EventArgs) Handles Translate_start.Click
@@ -250,22 +235,34 @@ Public Class Translate_form
 
     Private Sub do_all_Click(sender As Object, e As EventArgs) Handles do_all.Click
 
-        Dim files_count As Integer
+        Dim files_count As Integer = 0
+        Dim cur_file As Integer = 0
 
         ' FolderBrowserDialog1.InitialDirectory = Directory.GetCurrentDirectory()
-        '  FolderBrowserDialog1.ShowDialog()
+        ' FolderBrowserDialog1.ShowDialog()
 
 
         If FolderBrowserDialog1.ShowDialog() = DialogResult.OK Then
 
 
+            files_count = Directory.GetFiles(FolderBrowserDialog1.SelectedPath).Count()
+
+
             For Each LogFile In Directory.GetFiles(FolderBrowserDialog1.SelectedPath)
-                files_count += 1
+
+                Label1.Text = CStr((cur_file + 1) & " / " & files_count)
+
+                DataGridView1.Rows.Clear()
 
                 xml_path = LogFile
                 Read_xml(xml_path)
+                generate_table()
                 trans_table()
                 save_new(xml_path)
+
+                cur_file += 1
+
+                Application.DoEvents()
 
             Next
 
