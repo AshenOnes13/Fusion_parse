@@ -31,21 +31,22 @@ Partial Class popup_form_saving
         'save_new
         '
         Me.save_new.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.save_new.Location = New System.Drawing.Point(57, 96)
+        Me.save_new.Location = New System.Drawing.Point(164, 96)
         Me.save_new.Name = "save_new"
         Me.save_new.Size = New System.Drawing.Size(101, 31)
         Me.save_new.TabIndex = 0
-        Me.save_new.Text = "Save new"
+        Me.save_new.Text = "Save as"
         Me.save_new.UseVisualStyleBackColor = True
         '
         'Rewrite
         '
         Me.Rewrite.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Rewrite.Location = New System.Drawing.Point(164, 96)
+        Me.Rewrite.Enabled = False
+        Me.Rewrite.Location = New System.Drawing.Point(57, 96)
         Me.Rewrite.Name = "Rewrite"
         Me.Rewrite.Size = New System.Drawing.Size(101, 31)
         Me.Rewrite.TabIndex = 1
-        Me.Rewrite.Text = "Rewrite"
+        Me.Rewrite.Text = "Save"
         Me.Rewrite.UseVisualStyleBackColor = True
         '
         'cancel

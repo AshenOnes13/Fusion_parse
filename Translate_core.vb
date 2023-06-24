@@ -84,7 +84,7 @@ Public Class Translate_form
 
 
         translateClient = TranslationClient.CreateFromApiKey(GoogleCloudApiKey)
-        response = translateClient.TranslateText(TextBox1.Text, LanguageCodes.Ukrainian, LanguageCodes.English)
+        response = translateClient.TranslateText(TextBox1.Text, LanguageCodes.Ukrainian)
         Label1.Text = response.TranslatedText
 
     End Sub
@@ -115,7 +115,7 @@ Public Class Translate_form
             'переклад окремих частин, розбитого рядка
             For s = 0 To splitedrow.Length - 1
 
-                response = translateClient.TranslateHtml(splitedrow(s), LanguageCodes.Ukrainian, LanguageCodes.Polish)
+                response = translateClient.TranslateHtml(splitedrow(s), LanguageCodes.Ukrainian)
 
                 'збирання перекладеного рядка та додавання переносів
                 If s < splitedrow.Length - 1 Then
@@ -170,9 +170,7 @@ Public Class Translate_form
         Dim XMLDoc As New Xml.XmlDocument
         Dim RootNode() As String
         Dim NewXMLNode As Xml.XmlNode
-        Dim XMLAttribute As Xml.XmlAttribute
 
-        Dim ChildNode(,) As String
         Dim XMLAttribute1 As Xml.XmlAttribute
         Dim XMLAttribute2 As Xml.XmlAttribute
         Dim XMLAttribute3 As Xml.XmlAttribute
@@ -244,4 +242,6 @@ Public Class Translate_form
         write_xml()
 
     End Sub
+
+
 End Class

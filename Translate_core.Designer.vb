@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Translate_form
     Inherits System.Windows.Forms.Form
 
     'Форма переопределяет dispose для очистки списка компонентов.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Translate_form
     'Примечание: следующая процедура является обязательной для конструктора форм Windows Forms
     'Для ее изменения используйте конструктор форм Windows Form.  
     'Не изменяйте ее в редакторе исходного кода.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.Start = New System.Windows.Forms.Button()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
@@ -37,7 +37,7 @@ Partial Class Translate_form
         'Start
         '
         Me.Start.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Start.Location = New System.Drawing.Point(651, 399)
+        Me.Start.Location = New System.Drawing.Point(700, 399)
         Me.Start.Name = "Start"
         Me.Start.Size = New System.Drawing.Size(137, 39)
         Me.Start.TabIndex = 0
@@ -56,13 +56,13 @@ Partial Class Translate_form
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Location = New System.Drawing.Point(12, 12)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(776, 381)
+        Me.DataGridView1.Size = New System.Drawing.Size(825, 381)
         Me.DataGridView1.TabIndex = 1
         '
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(12, 407)
+        Me.Button1.Location = New System.Drawing.Point(12, 403)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(83, 31)
         Me.Button1.TabIndex = 2
@@ -72,7 +72,7 @@ Partial Class Translate_form
         'TextBox1
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.TextBox1.Location = New System.Drawing.Point(113, 413)
+        Me.TextBox1.Location = New System.Drawing.Point(101, 409)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(151, 20)
         Me.TextBox1.TabIndex = 3
@@ -81,7 +81,7 @@ Partial Class Translate_form
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(294, 416)
+        Me.Label1.Location = New System.Drawing.Point(267, 409)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 4
@@ -90,7 +90,7 @@ Partial Class Translate_form
         'Translate_start
         '
         Me.Translate_start.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Translate_start.Location = New System.Drawing.Point(521, 399)
+        Me.Translate_start.Location = New System.Drawing.Point(570, 399)
         Me.Translate_start.Name = "Translate_start"
         Me.Translate_start.Size = New System.Drawing.Size(124, 39)
         Me.Translate_start.TabIndex = 5
@@ -100,7 +100,7 @@ Partial Class Translate_form
         'save_file
         '
         Me.save_file.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.save_file.Location = New System.Drawing.Point(391, 399)
+        Me.save_file.Location = New System.Drawing.Point(440, 399)
         Me.save_file.Name = "save_file"
         Me.save_file.Size = New System.Drawing.Size(124, 39)
         Me.save_file.TabIndex = 6
@@ -115,7 +115,7 @@ Partial Class Translate_form
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
+        Me.ClientSize = New System.Drawing.Size(849, 450)
         Me.Controls.Add(Me.save_file)
         Me.Controls.Add(Me.Translate_start)
         Me.Controls.Add(Me.Label1)
