@@ -31,6 +31,8 @@ Partial Class Translate_form
         Me.Translate_start = New System.Windows.Forms.Button()
         Me.save_file = New System.Windows.Forms.Button()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.do_all = New System.Windows.Forms.Button()
+        Me.FolderBrowserDialog1 = New System.Windows.Forms.FolderBrowserDialog()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -72,7 +74,7 @@ Partial Class Translate_form
         'TextBox1
         '
         Me.TextBox1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.TextBox1.Location = New System.Drawing.Point(101, 409)
+        Me.TextBox1.Location = New System.Drawing.Point(101, 399)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(151, 20)
         Me.TextBox1.TabIndex = 3
@@ -81,7 +83,7 @@ Partial Class Translate_form
         '
         Me.Label1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(267, 409)
+        Me.Label1.Location = New System.Drawing.Point(101, 425)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(39, 13)
         Me.Label1.TabIndex = 4
@@ -111,11 +113,21 @@ Partial Class Translate_form
         '
         Me.SaveFileDialog1.DefaultExt = "xml"
         '
+        'do_all
+        '
+        Me.do_all.Location = New System.Drawing.Point(312, 399)
+        Me.do_all.Name = "do_all"
+        Me.do_all.Size = New System.Drawing.Size(122, 39)
+        Me.do_all.TabIndex = 7
+        Me.do_all.Text = "Edit all"
+        Me.do_all.UseVisualStyleBackColor = True
+        '
         'Translate_form
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(849, 450)
+        Me.Controls.Add(Me.do_all)
         Me.Controls.Add(Me.save_file)
         Me.Controls.Add(Me.Translate_start)
         Me.Controls.Add(Me.Label1)
@@ -140,4 +152,6 @@ Partial Class Translate_form
     Friend WithEvents Translate_start As Button
     Friend WithEvents save_file As Button
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents do_all As Button
+    Friend WithEvents FolderBrowserDialog1 As FolderBrowserDialog
 End Class

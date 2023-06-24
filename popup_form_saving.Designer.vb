@@ -41,7 +41,6 @@ Partial Class popup_form_saving
         'Rewrite
         '
         Me.Rewrite.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Rewrite.Enabled = False
         Me.Rewrite.Location = New System.Drawing.Point(57, 96)
         Me.Rewrite.Name = "Rewrite"
         Me.Rewrite.Size = New System.Drawing.Size(101, 31)

@@ -13,6 +13,7 @@ Public Class Translate_form
 
     Dim str_arr(,) As String
     Dim translated() As String
+    Dim xml_path As String
 
     Public save_statement As Integer = 0 '0 - close, 1 - save new, 2 - rewrite
 
@@ -203,11 +204,15 @@ Public Class Translate_form
 
     Sub rewrite_file()
 
+        save_new(xml_path)
+
     End Sub
 
     'запуск на виконня парсингу xml файлу
     Private Sub Start_Click(sender As Object, e As EventArgs) Handles Start.Click
-        Dim xml_path As String
+
+        DataGridView1.ColumnCount = 1
+        DataGridView1.RowCount = 1
 
         OpenFileDialog1.InitialDirectory = Directory.GetCurrentDirectory()
 
@@ -243,5 +248,36 @@ Public Class Translate_form
 
     End Sub
 
+    Private Sub do_all_Click(sender As Object, e As EventArgs) Handles do_all.Click
 
+        Dim files_count As Integer
+
+        ' FolderBrowserDialog1.InitialDirectory = Directory.GetCurrentDirectory()
+        '  FolderBrowserDialog1.ShowDialog()
+
+
+        If FolderBrowserDialog1.ShowDialog() = DialogResult.OK Then
+
+
+            For Each LogFile In Directory.GetFiles(FolderBrowserDialog1.SelectedPath)
+                files_count += 1
+
+                xml_path = LogFile
+                Read_xml(xml_path)
+                trans_table()
+                save_new(xml_path)
+
+            Next
+
+
+
+
+
+        End If
+
+
+
+
+
+    End Sub
 End Class
