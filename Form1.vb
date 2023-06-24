@@ -59,7 +59,7 @@ Public Class Form1
         DataGridView1.RowCount = row
 
 
-        'шапка по вертикали
+        'нумерація рядків
         For i = 0 To row - 1
             DataGridView1.Rows(i).Cells(0).Value = i + 1
         Next
@@ -83,11 +83,14 @@ Public Class Form1
         response = translateClient.TranslateText(TextBox1.Text, LanguageCodes.Ukrainian, LanguageCodes.English)
         Label1.Text = response.TranslatedText
 
-
     End Sub
 
+
+    'переклад з використанням google
     Private Sub trans_table()
 
+
+        'ініціалізація перекладача
         Dim translateClient As TranslationClient
         Dim response As TranslationResult
         Dim temp_row As String
@@ -96,33 +99,34 @@ Public Class Form1
         ReDim translated(str_arr.GetLength(1) - 1)
 
 
-
-
-
         For i = 0 To str_arr.GetLength(1) - 1
 
+
+            'розбивання строки по символай переносу рядка
             Dim splitedrow() As String
 
             splitedrow = str_arr(2, i).Split(vbLf)
             temp_row = ""
 
-
+            'переклад окремих частин, розбитого рядка
             For s = 0 To splitedrow.Length - 1
 
                 response = translateClient.TranslateHtml(splitedrow(s), LanguageCodes.Ukrainian, LanguageCodes.Polish)
 
+                'збирання перекладеного рядка та додавання переносів
                 If s < splitedrow.Length - 1 Then
                     temp_row = temp_row + response.TranslatedText + vbLf
                 Else
                     temp_row = temp_row + response.TranslatedText
                 End If
 
-
-
             Next
 
+            'запис у масив з перекладом та вивід у таблицю
             translated(i) = temp_row
             DataGridView1.Rows(i).Cells(4).Value = temp_row
+
+
             'response = translateClient.TranslateHtml(str_arr(2, i), LanguageCodes.Ukrainian, LanguageCodes.Polish)
             'translated(i) = response.TranslatedText
             'DataGridView1.Rows(i).Cells(4).Value = response.TranslatedText
@@ -137,7 +141,7 @@ Public Class Form1
 
 
 
-
+    'запуск на виконня парсингу xml файлу
     Private Sub Start_Click(sender As Object, e As EventArgs) Handles Start.Click
         Dim xml_path As String
 
@@ -154,16 +158,18 @@ Public Class Form1
 
     End Sub
 
+    'тестове бознащо 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
         Translate_testing()
 
     End Sub
 
+
+    'виклик функції перекладу
     Private Sub Translate_start_Click(sender As Object, e As EventArgs) Handles Translate_start.Click
 
         trans_table()
-
 
 
     End Sub
