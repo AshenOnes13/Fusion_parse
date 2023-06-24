@@ -6,13 +6,16 @@ Imports Google.Cloud.Translation.V2
 
 
 
-Public Class Form1
+Public Class Translate_form
 
 
     Const GoogleCloudApiKey = "AIzaSyA_lbC-g1PfLkg6nskzmd0tJ0NagGhQ-D0"
 
     Dim str_arr(,) As String
     Dim translated() As String
+
+    Public save_statement As Integer = 0 '0 - close, 1 - save new, 2 - rewrite
+
 
     Private Sub Read_xml(ByVal XMLFilepath As String)
 
@@ -48,6 +51,7 @@ Public Class Form1
     End Sub
 
 
+    'створення 
     Sub generate_table()
         Dim col As Integer
         Dim row As Integer
@@ -134,12 +138,74 @@ Public Class Form1
 
         Next
 
-            MessageBox.Show("Done")
+        MessageBox.Show("Done")
 
 
     End Sub
 
+    Sub write_xml()
 
+        popup_form_saving.ShowDialog()
+
+        Dim myStream As String
+
+        'зберігання нового файлу
+        If save_statement = 1 Then
+
+            If SaveFileDialog1.ShowDialog() = DialogResult.OK Then
+                myStream = SaveFileDialog1.FileName()
+                If (myStream IsNot Nothing) Then
+                    save_new(myStream)
+                End If
+            End If
+
+            'перезапис існуючого
+        ElseIf save_statement = 2 Then
+            rewrite_file()
+        End If
+    End Sub
+
+    Sub save_new(ByVal XMLFilePath As String)
+
+        Dim XMLDoc As New Xml.XmlDocument
+        Dim RootNode() As String
+        Dim NewXMLNode As Xml.XmlNode
+        Dim XMLAttribute As Xml.XmlAttribute
+
+        Dim ChildNode(,) As String
+        Dim XMLAttribute1 As Xml.XmlAttribute
+        Dim XMLAttribute2 As Xml.XmlAttribute
+        Dim XMLAttribute3 As Xml.XmlAttribute
+
+        RootNode = {"label"}
+
+        XMLDoc.LoadXml(("<?xml version='1.0'  encoding='utf-8'?>" & "<Resource>" & "</Resource>"))
+
+        For i = 0 To str_arr.GetLength(1) - 1
+            NewXMLNode = XMLDoc.CreateNode(Xml.XmlNodeType.Element, "label", "label", "")
+
+            XMLAttribute1 = XMLDoc.CreateAttribute("commandName")
+            XMLAttribute1.Value = str_arr(0, i)
+            XMLAttribute2 = XMLDoc.CreateAttribute("devLabel")
+            XMLAttribute2.Value = str_arr(1, i)
+            XMLAttribute3 = XMLDoc.CreateAttribute("translation")
+            XMLAttribute3.Value = translated(i)
+
+            NewXMLNode.Attributes.Append(XMLAttribute1)
+            NewXMLNode.Attributes.Append(XMLAttribute2)
+            NewXMLNode.Attributes.Append(XMLAttribute3)
+
+            XMLDoc.DocumentElement.AppendChild(NewXMLNode)
+
+        Next
+
+        XMLDoc.Save(XMLFilePath)
+
+    End Sub
+
+    Sub rewrite_file()
+
+    End Sub
 
     'запуск на виконня парсингу xml файлу
     Private Sub Start_Click(sender As Object, e As EventArgs) Handles Start.Click
@@ -171,6 +237,11 @@ Public Class Form1
 
         trans_table()
 
+    End Sub
+
+    Private Sub save_file_Click(sender As Object, e As EventArgs) Handles save_file.Click
+
+        write_xml()
 
     End Sub
 End Class
