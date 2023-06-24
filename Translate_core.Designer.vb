@@ -138,7 +138,7 @@ Partial Class Translate_form
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.Start)
         Me.Name = "Translate_form"
-        Me.Text = "Form1"
+        Me.Text = "Fusion translate"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
