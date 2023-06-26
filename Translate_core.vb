@@ -11,20 +11,20 @@ Public Class Translate_form
     Const GoogleCloudApiKey = "AIzaSyA_lbC-g1PfLkg6nskzmd0tJ0NagGhQ-D0"
 
 
-    Dim str_arr(,) As String
-    Dim translated() As String
-    Dim xml_path As String
+    Dim str_arr(,) As String            'масив значень початкового документу
+    Dim translated() As String          'масив перекладених значень
+    Dim xml_path As String              'шлях до документу
 
-    Public save_statement As Integer = 0 '0 - close, 1 - save new, 2 - rewrite
+    Public save_statement As Integer = 0        'опції для зберігання окремого файлу 0 - close, 1 - save new, 2 - rewrite
 
-
+    'відкриття та обробка документу
     Private Sub Read_xml(ByVal XMLFilepath As String)
 
         Dim XMLDoc As New Xml.XmlDocument
         Dim XMLNode As Xml.XmlNode
         Dim count_rows As Integer
         Dim i As Integer = 0
-        Dim elemList As XmlNodeList = XMLDoc.GetElementsByTagName("label")
+        Dim elemList As XmlNodeList = XMLDoc.GetElementsByTagName("label")  'пошук вузлів по заголовку
 
         Try
             XMLDoc.Load(XMLFilepath)
@@ -32,7 +32,7 @@ Public Class Translate_form
             Throw New Exception(e.Message)
         End Try
 
-
+        'підрахунок рядків
         count_rows = elemList.Count
         If count_rows = 0 Then
             count_rows += 1
@@ -40,6 +40,7 @@ Public Class Translate_form
 
         ReDim str_arr(2, count_rows - 1)
 
+        'заповнення масиву значення з xml файлу
         For Each XMLNode In XMLDoc.DocumentElement.ChildNodes
 
             str_arr(0, i) = XMLNode.Attributes(0).Value
@@ -52,7 +53,7 @@ Public Class Translate_form
     End Sub
 
 
-    'створення 
+    'відображення таблиці поточних значень файлу
     Sub generate_table()
         Dim col As Integer
         Dim row As Integer
@@ -63,12 +64,12 @@ Public Class Translate_form
         DataGridView1.ColumnCount = col + 2
         DataGridView1.RowCount = row
 
-
         'нумерація рядків
         For i = 0 To row - 1
             DataGridView1.Rows(i).Cells(0).Value = i + 1
         Next
 
+        'заповнення таблиці значеннями з масиву
         For n = 0 To row - 1
             For k = 0 To col - 1
                 DataGridView1.Rows(n).Cells(k + 1).Value = str_arr(k, n)
@@ -84,29 +85,33 @@ Public Class Translate_form
 
 
         'ініціалізація перекладача
-        Dim translateClient As TranslationClient
-        Dim response As TranslationResult
+        Dim translateClient As TranslationClient        'перекладач
+        Dim response As TranslationResult               'місце для зберігання результату перекладу
         Dim temp_row As String
         translateClient = TranslationClient.CreateFromApiKey(GoogleCloudApiKey)
+
 
         ReDim translated(str_arr.GetLength(1) - 1)
 
 
         For i = 0 To str_arr.GetLength(1) - 1
 
-            Label2.Text = CStr((i + 1) & " / " & str_arr.GetLength(1))
-
+            Label2.Text = CStr((i + 1) & " / " & str_arr.GetLength(1))      'виведення обсягу рядків поточного документу
             ProgressBar1.Value = Math.Round(100 * (i + 1) / str_arr.GetLength(1))
-            'розбивання строки по символай переносу рядка
+
+
+            'розбиття рядка по символах переносу рядка
             Dim splitedrow() As String
 
+            'для англійської мови str_arr(1, i)
+
             splitedrow = str_arr(2, i).Split(vbLf)
+            ' splitedrow = str_arr(1, i).Split(vbLf)
+
             temp_row = ""
 
             'переклад окремих частин, розбитого рядка
             For s = 0 To splitedrow.Length - 1
-
-
 
                 response = translateClient.TranslateHtml(splitedrow(s), LanguageCodes.Ukrainian)
 
@@ -117,7 +122,7 @@ Public Class Translate_form
                     temp_row = temp_row + response.TranslatedText
                 End If
 
-                Application.DoEvents()
+                Application.DoEvents()      'підтримування активності головного вікна
 
             Next
 
@@ -126,21 +131,17 @@ Public Class Translate_form
             DataGridView1.Rows(i).Cells(4).Value = temp_row
 
 
-            'response = translateClient.TranslateHtml(str_arr(2, i), LanguageCodes.Ukrainian, LanguageCodes.Polish)
-            'translated(i) = response.TranslatedText
-            'DataGridView1.Rows(i).Cells(4).Value = response.TranslatedText
-
-
         Next
 
         ' MessageBox.Show("Done")
 
-
     End Sub
 
-    Sub write_xml()
 
-        popup_form_saving.ShowDialog()
+    'виклик вікна збереження файлу 
+    Sub write_xml_window()
+
+        popup_form_saving.ShowDialog()      'вікно діалогу збереження
 
         Dim myStream As String
 
@@ -160,6 +161,8 @@ Public Class Translate_form
         End If
     End Sub
 
+
+    'формування перекладеного xml файлу та його збереження
     Sub save_new(ByVal XMLFilePath As String)
 
         Dim XMLDoc As New Xml.XmlDocument
@@ -175,15 +178,16 @@ Public Class Translate_form
         XMLDoc.LoadXml(("<?xml version='1.0'  encoding='utf-8'?>" & "<Resource>" & "</Resource>"))
 
         For i = 0 To str_arr.GetLength(1) - 1
+            'створення нового вузла
             NewXMLNode = XMLDoc.CreateNode(Xml.XmlNodeType.Element, "label", "label", "")
-
+            'додавання атрибутів вузла
             XMLAttribute1 = XMLDoc.CreateAttribute("commandName")
             XMLAttribute1.Value = str_arr(0, i)
             XMLAttribute2 = XMLDoc.CreateAttribute("devLabel")
             XMLAttribute2.Value = str_arr(1, i)
             XMLAttribute3 = XMLDoc.CreateAttribute("translation")
             XMLAttribute3.Value = translated(i)
-
+            'запис атрибутів у файл
             NewXMLNode.Attributes.Append(XMLAttribute1)
             NewXMLNode.Attributes.Append(XMLAttribute2)
             NewXMLNode.Attributes.Append(XMLAttribute3)
@@ -191,11 +195,12 @@ Public Class Translate_form
             XMLDoc.DocumentElement.AppendChild(NewXMLNode)
 
         Next
-
+        'зберігання
         XMLDoc.Save(XMLFilePath)
 
     End Sub
 
+    'виконання функції збереження для відкритого файлу
     Sub rewrite_file()
 
         save_new(xml_path)
@@ -227,27 +232,26 @@ Public Class Translate_form
 
     End Sub
 
+    'відкриття вікна збереження фійлу
     Private Sub save_file_Click(sender As Object, e As EventArgs) Handles save_file.Click
 
-        write_xml()
+        write_xml_window()
 
     End Sub
 
+    'автоматичне опрацювання обраної папки файлів
     Private Sub do_all_Click(sender As Object, e As EventArgs) Handles do_all.Click
 
-        Dim files_count As Integer = 0
+        Dim files_count As Integer
         Dim cur_file As Integer = 0
-
-        ' FolderBrowserDialog1.InitialDirectory = Directory.GetCurrentDirectory()
-        ' FolderBrowserDialog1.ShowDialog()
 
 
         If FolderBrowserDialog1.ShowDialog() = DialogResult.OK Then
 
 
-            files_count = Directory.GetFiles(FolderBrowserDialog1.SelectedPath).Count()
+            files_count = Directory.GetFiles(FolderBrowserDialog1.SelectedPath).Count() 'підрахунок кількості файлів
 
-
+            'цикл відкриття та обробки кожного файлу
             For Each LogFile In Directory.GetFiles(FolderBrowserDialog1.SelectedPath)
 
                 Label1.Text = CStr((cur_file + 1) & " / " & files_count)
@@ -266,15 +270,7 @@ Public Class Translate_form
 
             Next
 
-
-
-
-
         End If
-
-
-
-
 
     End Sub
 End Class
