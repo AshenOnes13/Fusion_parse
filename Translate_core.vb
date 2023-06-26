@@ -7,10 +7,7 @@ Imports Google.Cloud.Translation.V2
 
 Public Class Translate_form
 
-
     Const GoogleCloudApiKey = "AIzaSyA_lbC-g1PfLkg6nskzmd0tJ0NagGhQ-D0"
-
-
 
     Dim str_arr(,) As String            'масив значень початкового документу
     Dim translated() As String          'масив перекладених значень
