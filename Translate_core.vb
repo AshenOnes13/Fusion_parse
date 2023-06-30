@@ -247,26 +247,54 @@ Public Class Translate_form
         If FolderBrowserDialog1.ShowDialog() = DialogResult.OK Then
 
 
-            files_count = Directory.GetFiles(FolderBrowserDialog1.SelectedPath).Count() 'підрахунок кількості файлів
+            Dim allFiles As IEnumerable(Of String) = Directory.EnumerateFiles(FolderBrowserDialog1.SelectedPath, "*.xml", SearchOption.AllDirectories)
+            Dim filePaths As IList(Of String) = allFiles.ToList()
 
-            'цикл відкриття та обробки кожного файлу
-            For Each LogFile In Directory.GetFiles(FolderBrowserDialog1.SelectedPath)
 
-                Label1.Text = CStr((cur_file + 1) & " / " & files_count)
+            files_count = filePaths.Count
 
-                DataGridView1.Rows.Clear()
+            If files_count = 0 Then
+                MessageBox.Show("File not found")
+            Else
+                For Each filePath As String In filePaths
 
-                xml_path = LogFile
-                Read_xml(xml_path)
-                generate_table()
-                trans_table()
-                save_new(xml_path)
+                    Label1.Text = CStr((cur_file + 1) & " / " & files_count)
 
-                cur_file += 1
+                    DataGridView1.Rows.Clear()
 
-                Application.DoEvents()
+                    xml_path = filePath
+                    Read_xml(xml_path)
+                    generate_table()
+                    trans_table()
+                    save_new(xml_path)
 
-            Next
+                    cur_file += 1
+
+                    Application.DoEvents()
+
+                Next
+            End If
+
+            'files_count = Directory.GetFiles(FolderBrowserDialog1.SelectedPath).Count() 'підрахунок кількості файлів
+
+            ''цикл відкриття та обробки кожного файлу
+            'For Each LogFile In Directory.GetFiles(FolderBrowserDialog1.SelectedPath)
+
+            '    Label1.Text = CStr((cur_file + 1) & " / " & files_count)
+
+            '    DataGridView1.Rows.Clear()
+
+            '    xml_path = LogFile
+            '    Read_xml(xml_path)
+            '    generate_table()
+            '    trans_table()
+            '    save_new(xml_path)
+
+            '    cur_file += 1
+
+            '    Application.DoEvents()
+
+            'Next
 
         End If
 
