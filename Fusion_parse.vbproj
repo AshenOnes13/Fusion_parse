@@ -73,10 +73,6 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="settings.Designer.vb">
-      <DependentUpon>settings.vb</DependentUpon>
-    </Compile>
-    <Compile Include="settings.vb" />
     <Compile Include="Translate_core.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -108,9 +104,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="settings.resx">
-      <DependentUpon>settings.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Translate_core.resx">
       <DependentUpon>Translate_core.vb</DependentUpon>
     </EmbeddedResource>
