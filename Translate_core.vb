@@ -185,6 +185,7 @@ Public Class Translate_form
             XMLAttribute2.Value = str_arr(1, i)
             XMLAttribute3 = XMLDoc.CreateAttribute("translation")
             XMLAttribute3.Value = translated(i)
+            ' XMLAttribute3.Value = str_arr(2, i) & vbCrLf & str_arr(0, i)
             'запис атрибутів у файл
             NewXMLNode.Attributes.Append(XMLAttribute1)
             NewXMLNode.Attributes.Append(XMLAttribute2)
